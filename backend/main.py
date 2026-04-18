@@ -14,7 +14,7 @@ app = FastAPI(title="Haibazo Book Review API")
 
 origins = [
     "http://localhost:5173",
-    "https://haibazo-test2.vercel.app/",
+    "https://haibazo-test2.vercel.app",
 ]
 # Configure CORS
 app.add_middleware(
