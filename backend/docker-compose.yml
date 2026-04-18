@@ -1,16 +1,33 @@
 services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: haibazo_api
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://root:123456@db:5432/book_review_db
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
   db:
-    image: postgres:17
+    image: postgres:17-alpine
     container_name: haibazo_postgres
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: book_review_db
-    ports:
-      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d book_review_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
 
 volumes:
   postgres_data:
