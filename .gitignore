@@ -1,0 +1,10 @@
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+backend/__pycache__/
+backend/venv/
+backend/.env
+
+.DS_Store
+posgres_data/
